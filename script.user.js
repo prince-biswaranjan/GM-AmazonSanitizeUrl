@@ -1,44 +1,27 @@
 // ==UserScript==
-// @name        <Script Name>
+// @name        GM-AmazonSanitizeUrl
 // @namespace   https://github.com/pbvirus
-// @description <Script Description>
+// @description Removes unnecessary information from the URL
 // @author      Prince Biswaranjan
-// @homepage    <Homepage URL>
+// @homepage    https://github.com/prince-biswaranjan/GM-AmazonSanitizeUrl
 // @version     1.0.0
 // @grant       none
-// @include     *
+// @include     https://www.amazon.in/*/dp/*
 // @run-at      document-end
 // ==/UserScript==
 
 "use strict";
 
-function addButton(text, onclick, cssObj) {
-    cssObj = cssObj || {position: 'absolute', top: '7%', left:'4%', 'z-index': 3};
-    let button = document.createElement('button'), btnStyle = button.style;
-    document.body.appendChild(button);
-    
-    button.innerHTML = text;
-    button.onclick = onclick;
-    btnStyle.position = 'absolute';
-    
-    Object.keys(cssObj).forEach(key => {
-        btnStyle[key] = cssObj[key];
-    });
-    
-    return button;
-}
+(function(){
+  	//Get URL
+  	let url = location.href;
 
-window.addEventListener('load', () => {
-    let cssProp = {
-        position: 'fixed', 
-        top: '6%', 
-        right:'1%', 
-        'z-index': 10,
-        'background-color': 'red'
-    };
-    addButton('Remove Future Tasks', dummy, cssProp);
-});
+  	//Split URL by '?'
+  	let urlParts = url.split('/');
 
-function dummy(){
+    //build url
+    url = `https://${urlParts[2]}/dp/${urlParts[5]}`;
 
-}
+    //Navigate to direcet URL
+    window.location = url;
+})();
